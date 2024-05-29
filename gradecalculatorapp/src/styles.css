@@ -5,4 +5,133 @@
 body {
     margin: 30px;
     background-color: #FFF1DC;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.Header {
+    color: Black;
+}
+
+.Title {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin-bottom: 0px;
+}
+
+.SubTitle {
+    margin-top: 10px;
+}
+
+.InputClass {
+
+}
+
+.InputForClass {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.GradingType {
+
+}
+
+.Table {
+    margin: 0px;
+}
+
+.InputSection {
+    border-style: solid;
+    margin: 0px;
+}
+
+.InputHeader {
+    align-content: flex-start;
+    font-size: large;
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
+
+.InputHeader1Subtitle {
+    font-size: small;
+    margin:0%;
+    max-width: 200px;
+}
+
+.CategoryInput {
+    width: 200px;
+}
+
+.DownButton {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #71797E;
+    border: none;
+    color: white;
+    padding: 7px 8px;
+    text-align: center;
+    font-size: 10;
+    display: inline-block;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Input {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: 100px
+}
+
+
+
+.Button {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: 	#71797E;
+    border: none;
+    color: white;
+    padding: 7px 8px;
+    text-align: center;
+    font-size: 10;
+    display: inline-block;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+input[type="text"] {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+input[type="number"] {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal
+}
+
+p {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.FirstCells {
+    vertical-align: top;
+    margin: 0;
+}
+
+.EditClassAmount {
+    align-content: space-between;
 }
