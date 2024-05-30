@@ -4,7 +4,7 @@ import "./styles.css"
 function App() {
   return (
     <div className="Environment">
-      {/*Functions to Implement: 1) Make the Class editable and Change Font from Editable to Normal, 2)Increase the Number using the side arrows for the Grade and Weightage input boxes, 3)Drop down Needs to open up more input boxes */}
+      {/*Functions to Implement: 1) Make the Class editable and Change Font from Editable to Normal, 2)Drop down Needs to open up more input boxes, 3) The buttons should lose their hover after a couple of seconds*/}
       <div className="Header">
         <h1 className="Title">Grade Calculator for Multiple Classes</h1>
         <p className="SubTitle">By: Suvan Chatakondu. Inspired by <a href="https://www.rapidtables.com/calc/grade/grade-calculator.html" target="_blank" rel="noreferrer">Rapid Tables</a></p>
@@ -15,6 +15,13 @@ function App() {
       </div>
       <div className="InputSection">
         <div className="GradingType">
+          {/*Credit for this div goes to Rapid Tables*/}
+          <label for="gradetype1" className="btn">
+            <input type="radio" name="gradetype[]" value="0" id="gradetype1" checked></input>Percentage
+          </label>
+          <label for="gradetype2" className="btn">
+            <input type="radio" name="gradetype[]" value="1" id="gradetype2"></input>Points
+          </label>
         </div>
         <table className="Table">
           <tr>
@@ -28,15 +35,16 @@ function App() {
           </tr>
           <tr>
             <td><input className="CategoryInput" type="text" spellcheck="false"></input></td>
-            <td><button className="DownButton"><img src="images/down.png" alt="Down"></img></button></td>
+            <td><button className="DownButton"><img src="images/line-angle-down-icon.png" alt="Down"></img></button></td>
             <td><input className="Input" type="number" min="0" step="any"></input></td>
             <td><input className="Input" type="number" min="0" step="any"></input></td>
           </tr>
         </table>
         <button className="Button">Add Category</button>
       </div>
-
-
+      <div className="GradeBox">
+        {/*Need to Implement still*/}
+      </div>
       <div className="EditClassAmount">
         <button className="Button">Add Class</button>
         <button className="Button">Remove Class</button>

@@ -8,6 +8,7 @@ body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
+    accent-color: purple;
 }
 
 .Header {
@@ -26,13 +27,15 @@ body {
 }
 
 .InputClass {
-
+    margin-bottom: 10px;
 }
 
 .InputForClass {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .GradingType {
@@ -45,7 +48,7 @@ body {
 
 .InputSection {
     border-style: solid;
-    margin: 0px;
+    margin-top: 5px;
 }
 
 .InputHeader {
@@ -56,6 +59,7 @@ body {
     font-style: normal;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 5px;
     
 }
 
@@ -63,62 +67,122 @@ body {
     font-size: small;
     margin:0%;
     max-width: 200px;
+    margin-left: 5px;
 }
 
 .CategoryInput {
     width: 200px;
+    margin-left: 5px;
 }
 
 .DownButton {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
-    background-color: #71797E;
+    background-color: purple;
     border: none;
     color: white;
     padding: 7px 8px;
     text-align: center;
-    font-size: 10;
     display: inline-block;
     border-radius: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
+}
+
+.DownButton:hover {
+    background-color: darkorchid; /* Change to a slightly different color on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+}
+
+.DownButton:active {
+    transform: scale(0.95); /* Slightly reduce size on click */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.DownButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.5); /* Custom focus outline */
+}
+
+.DownButton:disabled {
+    background-color: #cccccc; /* Grey background for disabled state */
+    cursor: not-allowed; /* Show not-allowed cursor */
 }
 
 .Input {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
-    width: 100px
+    width: 100px;
 }
-
-
 
 .Button {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
-    background-color: 	#71797E;
+    background-color: purple;
     border: none;
     color: white;
     padding: 7px 8px;
     text-align: center;
-    font-size: 10;
     display: inline-block;
     border-radius: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 5px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color .2s ease;
 }
+
+.Button:hover {
+    background-color: darkorchid; /* Change to a slightly different color on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+}
+
+.Button:active {
+    transform: scale(0.95); /* Slightly reduce size on click */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.Button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.5); /* Custom focus outline */
+}
+
+.Button:disabled {
+    background-color: #cccccc; /* Grey background for disabled state */
+    cursor: not-allowed; /* Show not-allowed cursor */
+}
+
 input[type="text"] {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 5px;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border: 2px solid purple;
 }
 
 input[type="number"] {
     font-family: "Lato", sans-serif;
     font-weight: 400;
-    font-style: normal
+    font-style: normal;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 5px;
+    outline: none;
+}
+
+input[type="number"]:focus {
+    border: 2px solid purple;
 }
 
 p {
@@ -135,3 +199,23 @@ p {
 .EditClassAmount {
     align-content: space-between;
 }
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 2px 2px;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+    border-radius: .5rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
