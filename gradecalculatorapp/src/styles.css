@@ -75,6 +75,11 @@ body {
     margin-left: 5px;
 }
 
+.AssignmentInput {
+    width: 180px;
+    margin-left: 25px;
+}
+
 .DownButton {
     font-family: "Lato", sans-serif;
     font-weight: 400;
@@ -82,11 +87,10 @@ body {
     background-color: #72367c;
     border: none;
     color: white;
-    padding: 7px 8px;
+    padding: 5px 5px;
     text-align: center;
     display: inline-block;
     border-radius: 50px;
-    margin-top: 10px;
     margin-bottom: 10px;
     transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
 }
@@ -118,7 +122,14 @@ body {
     width: 100px;
 }
 
-.Button {
+.SubInput {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: 100px;
+}
+
+button {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -129,28 +140,27 @@ body {
     text-align: center;
     display: inline-block;
     border-radius: 50px;
-    margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 5px;
     transition: transform 0.1s ease, box-shadow 0.1s ease, background-color .2s ease;
 }
 
-.Button:hover {
+button:hover {
     background-color: rgb(119, 38, 160); /* Change to a slightly different color on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
 }
 
-.Button:active {
+button:active {
     transform: scale(0.95); /* Slightly reduce size on click */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
-.Button:focus {
+button:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.5); /* Custom focus outline */
 }
 
-.Button:disabled {
+button:disabled {
     background-color: #cccccc; /* Grey background for disabled state */
     cursor: not-allowed; /* Show not-allowed cursor */
 }

@@ -16,13 +16,24 @@ function App() {
     return localStorage.getItem('gradingType') || 'percentage';
   });
 
+  const [subCategories, setSubCategories] = useState(() => {
+    const savedSubCategories = localStorage.getItem('subCategories');
+    return savedSubCategories ? JSON.parse(savedSubCategories) : categories.map(() => []);
+  });
+
+  const [subCategoriesVisibility, setSubCategoriesVisibility] = useState(() => {
+    // Initialize visibility state for subcategories
+    return categories.map(() => false);
+  });
+
   useEffect(() => {
     localStorage.setItem('className', className);
   }, [className]);
 
   useEffect(() => {
     localStorage.setItem('categories', JSON.stringify(categories));
-  }, [categories]);
+    localStorage.setItem('subCategories', JSON.stringify(subCategories));
+  }, [categories, subCategories]);
 
   useEffect(() => {
     localStorage.setItem('gradingType', gradingType);
@@ -37,7 +48,7 @@ function App() {
   };
 
   const addCategory = () => {
-    setCategories([...categories, { name: '', grade: '', weight: '' }]);
+    setCategories([...categories, { name: '', grade: '', weight: '', subCategories: [] }]);
   };
 
   const removeLastCategory = () => {
@@ -45,11 +56,42 @@ function App() {
     newCategories.pop();  // Remove the last category
     setCategories(newCategories);
   };
-
-  const handleCategoryChange = (index, field, value) => {
+  
+  const addSubCategory = (categoryIndex) => {
+    const newSubCategories = [...subCategories];
+    newSubCategories[categoryIndex] = [...newSubCategories[categoryIndex], { name: '', grade: '', weight: '' }];
+    setSubCategories(newSubCategories);
+  };
+  
+  const removeLastSubCategory = (categoryIndex) => {
+    const newSubCategories = [...subCategories];
+    newSubCategories[categoryIndex].pop();
+    setSubCategories(newSubCategories);
+  };
+  
+  // Update the handleCategoryChange function to handle changes in subcategories
+  const handleCategoryChange = (categoryIndex, field, value) => {
     const newCategories = [...categories];
-    newCategories[index][field] = value;
+    newCategories[categoryIndex][field] = value;
     setCategories(newCategories);
+  };
+  
+  const handleSubCategoryChange = (categoryIndex, subCategoryIndex, field, value) => {
+    const newSubCategories = [...subCategories];
+    newSubCategories[categoryIndex][subCategoryIndex][field] = value;
+    setSubCategories(newSubCategories);
+  };
+
+  const toggleSubCategoriesVisibility = (categoryIndex) => {
+    const newVisibility = [...subCategoriesVisibility];
+    if (!newVisibility[categoryIndex]) {
+      // If subcategories are not visible yet and there are no existing subcategories, add a subcategory
+      if (subCategories[categoryIndex].length === 0) {
+        addSubCategory(categoryIndex);
+      }
+    }
+    newVisibility[categoryIndex] = !newVisibility[categoryIndex];
+    setSubCategoriesVisibility(newVisibility);
   };
 
   const calculateGrade = () => {
@@ -63,7 +105,16 @@ function App() {
       return totalWeight > 0 ? ((totalGrade / totalWeight) * 100).toFixed(2) : 0;
     }
   };
-  
+
+  const calculateCategoryGrade = (categoryIndex) => {
+    const subCategories = categories[categoryIndex].subCategories;
+    if (subCategories.length === 0) {
+      return { grade: categories[categoryIndex].grade, weight: categories[categoryIndex].weight };
+    }
+    const totalWeight = subCategories.reduce((total, subCategory) => total + parseFloat(subCategory.weight || 0), 0);
+    const totalGrade = subCategories.reduce((total, subCategory) => total + (parseFloat(subCategory.grade || 0) * parseFloat(subCategory.weight || 0)), 0);
+    return { grade: totalWeight > 0 ? (totalGrade / totalWeight).toFixed(2) : 0, weight: totalWeight };
+  };
 
   return (
     <div className="Environment">
@@ -74,7 +125,6 @@ function App() {
       </div>
       <div className="InputClass">
         <input className="InputForClass" type="text" placeholder="Class Name" value={className} onChange={handleClassNameChange} spellcheck="false"></input>
-        {/*Need to make a function for this so it goes back and for from editable and normal text*/}
       </div>
       <div className="InputSection">
         <div className="GradingType">
@@ -93,25 +143,23 @@ function App() {
                 <p className="InputHeader">Category Name</p>
                 <p className="InputHeader1Subtitle">Use Down Arrow to Add Specific Assignments (Optional)</p>
               </td>
-              <td className="FirstCells"></td>
               <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Grade (%)' : 'Points'}</p></td>
               <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Weight' : 'Max Points'}</p></td>
+              <td className="FirstCells"></td>
             </tr>
           </thead>
           <tbody>
-          {categories.map((category, index) => (
-              <tr key={index}>
-                <td><input
-                  className="CategoryInput"
-                  type="text"
-                  value={category.name}
-                  onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
-                  spellCheck="false"
-                /></td>
+          {categories.map((category, categoryIndex) => (
+            <>
+              <tr key={categoryIndex}>
                 <td>
-                  <button className="DownButton">
-                    <img src="images/line-angle-down-icon.png" alt="Down" />
-                  </button>
+                  <input
+                    className="CategoryInput"
+                    type="text"
+                    value={category.name}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'name', e.target.value)}
+                    spellCheck="false"
+                  />
                 </td>
                 <td>
                   <input
@@ -120,7 +168,7 @@ function App() {
                     min="0"
                     step="any"
                     value={category.grade}
-                    onChange={(e) => handleCategoryChange(index, 'grade', e.target.value)}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'grade', e.target.value)}
                   />
                 </td>
                 <td>
@@ -130,11 +178,59 @@ function App() {
                     min="0"
                     step="any"
                     value={category.weight}
-                    onChange={(e) => handleCategoryChange(index, 'weight', e.target.value)}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'weight', e.target.value)}
                   />
                 </td>
+                <td>
+                  <button className="DownButton" onClick={() => toggleSubCategoriesVisibility(categoryIndex)}>
+                    {subCategoriesVisibility[categoryIndex] ? 'Collapse' : 'Open'}
+                  </button>
+                </td>
               </tr>
-            ))}
+              {subCategoriesVisibility[categoryIndex] && subCategories[categoryIndex].map((subCategory, subCategoryIndex) => (
+                <tr key={`${categoryIndex}-${subCategoryIndex}`}>
+                  <td>
+                    <input
+                      className="AssignmentInput"
+                      type="text"
+                      value={subCategory.name}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'name', e.target.value)}
+                      spellCheck="false"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="SubInput"
+                      type="number"
+                      min="0"
+                      step="any"
+                      value={subCategory.grade}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'grade', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="SubInput"
+                      type="number"
+                      min="0"
+                      step="any"
+                      value={subCategory.weight}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'weight', e.target.value)}
+                    />
+                  </td>
+                </tr>
+              ))}
+                {subCategoriesVisibility[categoryIndex] && (
+                  <tr key={`buttons-${categoryIndex}`}>
+                    <td></td>
+                    <td colSpan="4">
+                      <button className="ButtonSub" onClick={() => addSubCategory(categoryIndex)}>Add Assignment</button>
+                      <button className="ButtonSub" onClick={() => removeLastSubCategory(categoryIndex)}>Remove Assignment</button>
+                    </td>
+                  </tr>
+                )}
+            </>
+          ))}
           </tbody>
         </table>
         <button className="Button" onClick={addCategory}>Add Category</button>
