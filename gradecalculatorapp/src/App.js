@@ -22,7 +22,6 @@ function App() {
   });
 
   const [subCategoriesVisibility, setSubCategoriesVisibility] = useState(() => {
-    // Initialize visibility state for subcategories
     return categories.map(() => false);
   });
 
@@ -128,6 +127,19 @@ function App() {
     return subCategories[categoryIndex].length > 0;
   };
 
+  const greenThreshold = 93;
+  const yellowThreshold = 90;
+
+  const determineColor = () => {
+    if (calculateGrade() <= yellowThreshold) {
+      return 'red';
+    } else if (calculateGrade() <= greenThreshold) {
+      return '#8B8000';
+    } else {
+      return 'green';
+    }
+  };
+
   return (
     <div className="Environment">
       <div className="Header">
@@ -135,123 +147,133 @@ function App() {
         <p className="SubTitle">By: Suvan Chatakondu. Inspired by <a href="https://www.rapidtables.com/calc/grade/grade-calculator.html" target="_blank" rel="noreferrer">Rapid Tables</a></p>
       </div>
       <div className="Duplicating">
-        <div className="InputClass">
-          <input className="InputForClass" type="text" placeholder="Class Name" value={className} onChange={handleClassNameChange} spellcheck="false"></input>
+      <div className="InputClass">
+        <input className="InputForClass" type="text" placeholder="Class Name" value={className} onChange={handleClassNameChange} spellcheck="false"></input>
+      </div>
+      <div className="InputSection">
+        <div className="GradingType">
+          {/*Credit for this div goes to Rapid Tables*/}
+          <label for="gradetype1" className="btn">
+            <input type="radio" name="gradetype[]" value="percentage" id="gradetype1" checked={gradingType === 'percentage'} onChange={handleGradingTypeChange}></input>Percentage
+          </label>
+          <label for="gradetype2" className="btn">
+            <input type="radio" name="gradetype[]" value="points" id="gradetype2" checked={gradingType === 'points'} onChange={handleGradingTypeChange}></input>Points
+          </label>
         </div>
-        <div className="InputSection">
-          <div className="GradingType">
-            {/*Credit for this div goes to Rapid Tables*/}
-            <label for="gradetype1" className="btn">
-              <input type="radio" name="gradetype[]" value="percentage" id="gradetype1" checked={gradingType === 'percentage'} onChange={handleGradingTypeChange}></input>Percentage
-            </label>
-            <label for="gradetype2" className="btn">
-              <input type="radio" name="gradetype[]" value="points" id="gradetype2" checked={gradingType === 'points'} onChange={handleGradingTypeChange}></input>Points
-            </label>
-          </div>
-          <table className="Table">
-            <thead>
-              <tr>
-                <td className="FirstCells">
-                  <p className="InputHeader">Category Name</p>
-                  <p className="InputHeader1Subtitle">Use Down Arrow to Add Specific Assignments (Optional)</p>
+        <table className="Table">
+          <thead>
+            <tr>
+              <td className="FirstCells">
+                <p className="InputHeader">Category Name</p>
+                <p className="InputHeader1Subtitle">Use Down Arrow to Add Specific Assignments (Optional)</p>
+              </td>
+              <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Grade (%)' : 'Points'}</p></td>
+              <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Weight' : 'Max Points'}</p></td>
+              <td className="FirstCells"></td>
+            </tr>
+          </thead>
+          <tbody>
+          {categories.map((category, categoryIndex) => (
+            <>
+              <tr key={categoryIndex}>
+                <td>
+                  <input
+                    className="CategoryInput"
+                    type="text"
+                    value={category.name}
+                    placeholder={` ${
+                        categoryIndex === 0
+                          ? "e.g. Homework"
+                          : categoryIndex === 1
+                          ? "e.g. Quizzes"
+                          : categoryIndex === 2
+                          ? "e.g. Exams"
+                          : categoryIndex === 3
+                          ? "e.g. Final"
+                          : ""
+                      }`}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'name', e.target.value)}
+                    spellCheck="false"
+                  />
                 </td>
-                <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Grade (%)' : 'Points'}</p></td>
-                <td className="FirstCells"><p className="InputHeader">{gradingType === 'percentage' ? 'Weight' : 'Max Points'}</p></td>
-                <td className="FirstCells"></td>
+                <td>
+                  <input
+                    className="Input"
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={category.grade}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'grade', e.target.value)}
+                    readOnly={isCategoryReadOnly(categoryIndex)}
+                  />
+                </td>
+                <td>
+                  <input
+                    className="Input"
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={category.weight}
+                    onChange={(e) => handleCategoryChange(categoryIndex, 'weight', e.target.value)}
+                    readOnly={isCategoryReadOnly(categoryIndex)}
+                  />
+                </td>
+                <td>
+                  <button className="DownButton" onClick={() => toggleSubCategoriesVisibility(categoryIndex)}>
+                    {subCategoriesVisibility[categoryIndex] ? '▲' : '▼'}
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-            {categories.map((category, categoryIndex) => (
-              <>
-                <tr key={categoryIndex}>
+              {subCategoriesVisibility[categoryIndex] && subCategories[categoryIndex].map((subCategory, subCategoryIndex) => (
+                <tr key={`${categoryIndex}-${subCategoryIndex}`}>
                   <td>
                     <input
-                      className="CategoryInput"
+                      className="AssignmentInput"
                       type="text"
-                      value={category.name}
-                      onChange={(e) => handleCategoryChange(categoryIndex, 'name', e.target.value)}
+                      value={subCategory.name}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'name', e.target.value)}
                       spellCheck="false"
                     />
                   </td>
                   <td>
                     <input
-                      className="Input"
+                      className="SubInput"
                       type="number"
                       min="0"
                       step="any"
-                      value={category.grade}
-                      onChange={(e) => handleCategoryChange(categoryIndex, 'grade', e.target.value)}
-                      readOnly={isCategoryReadOnly(categoryIndex)}
+                      value={subCategory.grade}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'grade', e.target.value)}
                     />
                   </td>
                   <td>
                     <input
-                      className="Input"
+                      className="SubInput"
                       type="number"
                       min="0"
                       step="any"
-                      value={category.weight}
-                      onChange={(e) => handleCategoryChange(categoryIndex, 'weight', e.target.value)}
-                      readOnly={isCategoryReadOnly(categoryIndex)}
+                      value={subCategory.weight}
+                      onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'weight', e.target.value)}
                     />
                   </td>
-                  <td>
-                    <button className="DownButton" onClick={() => toggleSubCategoriesVisibility(categoryIndex)}>
-                      {subCategoriesVisibility[categoryIndex] ? '▲' : '▼'}
-                    </button>
-                  </td>
                 </tr>
-                {subCategoriesVisibility[categoryIndex] && subCategories[categoryIndex].map((subCategory, subCategoryIndex) => (
-                  <tr key={`${categoryIndex}-${subCategoryIndex}`}>
-                    <td>
-                      <input
-                        className="AssignmentInput"
-                        type="text"
-                        value={subCategory.name}
-                        onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'name', e.target.value)}
-                        spellCheck="false"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className="SubInput"
-                        type="number"
-                        min="0"
-                        step="any"
-                        value={subCategory.grade}
-                        onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'grade', e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className="SubInput"
-                        type="number"
-                        min="0"
-                        step="any"
-                        value={subCategory.weight}
-                        onChange={(e) => handleSubCategoryChange(categoryIndex, subCategoryIndex, 'weight', e.target.value)}
-                      />
+              ))}
+                {subCategoriesVisibility[categoryIndex] && (
+                  <tr key={`buttons-${categoryIndex}`}>
+                    <td></td>
+                    <td colSpan="4">
+                      <button className="ButtonSub" onClick={() => addSubCategory(categoryIndex)}>Add Assignment</button>
+                      <button className="ButtonSub" onClick={() => removeLastSubCategory(categoryIndex)}>Remove Assignment</button>
                     </td>
                   </tr>
-                ))}
-                  {subCategoriesVisibility[categoryIndex] && (
-                    <tr key={`buttons-${categoryIndex}`}>
-                      <td></td>
-                      <td colSpan="4">
-                        <button className="ButtonSub" onClick={() => addSubCategory(categoryIndex)}>Add Assignment</button>
-                        <button className="ButtonSub" onClick={() => removeLastSubCategory(categoryIndex)}>Remove Assignment</button>
-                      </td>
-                    </tr>
-                  )}
-              </>
-            ))}
-            </tbody>
-          </table>
-          <button className="Button" onClick={addCategory}>Add Category</button>
-          <button className="Button" onClick={removeLastCategory}>Remove Category</button>
-          <p className="InputHeader">Grade In Class:</p>
-          <input className="Input2" type="number" readOnly={true} value={calculateGrade()}></input>
-        </div>
+                )}
+            </>
+          ))}
+          </tbody>
+        </table>
+        <button className="Button" onClick={addCategory}>Add Category</button>
+        <button className="Button" onClick={removeLastCategory}>Remove Category</button>
+        <p className="InputHeader" style={{ color: determineColor() }}>Overall Grade: {calculateGrade()}%</p>
+      </div>
       </div>
       <div className="EditClassAmount">
         <button className="Button">Add Class</button>

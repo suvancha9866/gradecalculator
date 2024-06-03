@@ -36,6 +36,7 @@ body {
     font-style: normal;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 5px;;
 }
 
 .Table {
@@ -43,6 +44,11 @@ body {
 }
 
 .InputSection {
+    margin-top: 5px;
+    width: 475px;
+}
+
+.Duplicating {
     border: solid;
     border-radius: 5px;
     margin-top: 5px;
@@ -246,5 +252,10 @@ p {
     padding: 5px;
     outline: none;
     margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.Duplicating {
+    margin-top: 5px;
     margin-bottom: 5px;
 }
