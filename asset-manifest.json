@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/gradecalculator/static/css/main.38c1d43b.css",
+    "main.js": "/gradecalculator/static/js/main.f648f5dd.js",
+    "static/js/453.b4140d6d.chunk.js": "/gradecalculator/static/js/453.b4140d6d.chunk.js",
+    "index.html": "/gradecalculator/index.html",
+    "main.38c1d43b.css.map": "/gradecalculator/static/css/main.38c1d43b.css.map",
+    "main.f648f5dd.js.map": "/gradecalculator/static/js/main.f648f5dd.js.map",
+    "453.b4140d6d.chunk.js.map": "/gradecalculator/static/js/453.b4140d6d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.38c1d43b.css",
+    "static/js/main.f648f5dd.js"
+  ]
+}
