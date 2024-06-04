@@ -279,6 +279,7 @@ function App() {
       <div className="Header">
         <h1 className="Title">Grade Calculator for Multiple Classes</h1>
         <p className="SubTitle">By: Suvan Chatakondu. Inspired by <a href="https://www.rapidtables.com/calc/grade/grade-calculator.html" target="_blank" rel="noreferrer">Rapid Tables</a></p>
+        <p>Note: Clearing Browsing Data will clear inputs</p>
       </div>
       {[...Array(7)].map((_, index) => (
         <GradeCalculator key={index} id={index} />
