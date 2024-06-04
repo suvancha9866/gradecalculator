@@ -6,4 +6,6 @@ University of Illinois at Urbana-Champaign doesn't have a localized place to che
 
 This is just for my own happiness and I know it is basic, but I wanted to use this. I had a preliminary one on Excel, but this seemed like a better challenge.
 
+I did all of the front-end/design and all of the backend was by Chat GPT. I hate Javascript so I didn't even bother to learn.
+
 Thank you for supporting me!
