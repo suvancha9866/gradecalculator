@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/gradecalculator/static/css/main.38c1d43b.css",
-    "main.js": "/gradecalculator/static/js/main.aad513fe.js",
+    "main.css": "/gradecalculator/static/css/main.787f8103.css",
+    "main.js": "/gradecalculator/static/js/main.5373284d.js",
     "static/js/453.b4140d6d.chunk.js": "/gradecalculator/static/js/453.b4140d6d.chunk.js",
     "index.html": "/gradecalculator/index.html",
-    "main.38c1d43b.css.map": "/gradecalculator/static/css/main.38c1d43b.css.map",
-    "main.aad513fe.js.map": "/gradecalculator/static/js/main.aad513fe.js.map",
+    "main.787f8103.css.map": "/gradecalculator/static/css/main.787f8103.css.map",
+    "main.5373284d.js.map": "/gradecalculator/static/js/main.5373284d.js.map",
     "453.b4140d6d.chunk.js.map": "/gradecalculator/static/js/453.b4140d6d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.38c1d43b.css",
-    "static/js/main.aad513fe.js"
+    "static/css/main.787f8103.css",
+    "static/js/main.5373284d.js"
   ]
 }
