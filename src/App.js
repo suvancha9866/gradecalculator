@@ -3,6 +3,9 @@ import './styles.css';
 
 const GradeCalculator = ({ id }) => {
 
+  const [className, setClassName] = useState(() => {
+    return localStorage.getItem(`className_${id}`) || "Class Name";
+  });
 
   const [categories, setCategories] = useState(() => {
     const savedCategories = localStorage.getItem(`categories_${id}`);
@@ -23,6 +26,10 @@ const GradeCalculator = ({ id }) => {
   });
 
   useEffect(() => {
+    localStorage.setItem(`className_${id}`, className);
+  }, [id, className]);
+
+  useEffect(() => {
     localStorage.setItem(`categories_${id}`, JSON.stringify(categories));
     localStorage.setItem(`subCategories_${id}`, JSON.stringify(subCategories));
   }, [id, categories, subCategories]);
@@ -31,6 +38,10 @@ const GradeCalculator = ({ id }) => {
     localStorage.setItem(`gradingType_${id}`, gradingType);
   }, [id, gradingType]);
 
+  const handleClassNameChange = (event) => {
+    setClassName(event.target.textContent);
+  };
+  
   const handleGradingTypeChange = (event) => {
     setGradingType(event.target.value);
   };
@@ -148,7 +159,9 @@ const GradeCalculator = ({ id }) => {
     <div className="Environment">
       <div className="Duplicating">
         <div className="InputClass">
-          <p className="InputHeader2"contenteditable="true" style={{ color:"#13294B" }}>Class Name</p>
+          <p className="InputHeader2" contenteditable="true" suppressContentEditableWarning
+            onInput={handleClassNameChange}
+            style={{ color:"#13294B" }}>{className}</p>
         </div>
         <div className="InputSection">
           <div className="GradingType">
