@@ -159,9 +159,10 @@ const GradeCalculator = ({ id }) => {
     <div className="Environment">
       <div className="Duplicating">
         <div className="InputClass">
-          <p className="InputHeader2" contenteditable="true" suppressContentEditableWarning
-            onInput={handleClassNameChange}
-            style={{ color:"#13294B" }}>{className}</p>
+        <p className="InputHeader2" contenteditable="true" suppressContentEditableWarning onInput={handleClassNameChange} style={{ color: "#13294B" }}
+        >
+          {className}
+        </p>
         </div>
         <div className="InputSection">
           <div className="GradingType">
